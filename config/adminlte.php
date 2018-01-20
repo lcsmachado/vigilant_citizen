@@ -32,7 +32,7 @@ return [
 
     'logo' => '<b>CitiZen</b>',
 
-    'logo_mini' => '<b>A</b>LT',
+    'logo_mini' => '<b>CZ</b>',
 
     /*
     |--------------------------------------------------------------------------
@@ -85,7 +85,7 @@ return [
     |
     */
 
-    'dashboard_url' => 'home',
+    'dashboard_url' => '/painel',
 
     'logout_url' => 'logout',
 
@@ -114,7 +114,7 @@ return [
             'icon' => 'cogs',
             'url'  => 'painel/admin',
         ],
-        [
+        /*[
             'text'        => 'Pages',
             'url'         => 'admin/pages',
             'icon'        => 'file',
@@ -182,7 +182,7 @@ return [
         [
             'text'       => 'Information',
             'icon_color' => 'aqua',
-        ],
+        ],*/
     ],
 
     /*
