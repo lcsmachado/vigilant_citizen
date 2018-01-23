@@ -114,6 +114,11 @@ return [
             'icon' => 'cogs',
             'url'  => 'painel/admin',
         ],
+        [
+            'text' =>'Categorias',
+            'icon' =>'file',
+            'url'  =>'painel/categorie',
+        ],
         /*[
             'text'        => 'Pages',
             'url'         => 'admin/pages',

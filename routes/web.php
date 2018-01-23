@@ -27,6 +27,16 @@ Route::prefix('painel')->group(function () {
         Route::delete('/{email}/delete', 'AdminController@destroy')->name('admin.destroy');
         Route::get('/', 'AdminController@index')->name('admin');
     });
+    //Routers to Categories
+    Route::prefix('categorie')->group(function () {
+        Route::get('/create', 'CategorieController@create')->name('categorie.create');
+        Route::post('/create', 'CategorieController@store')->name('categorie.store');
+        Route::get('/{id}/edit', 'CategorieController@edit')->name('categorie.edit');
+        Route::put('{id}/update', 'CategorieController@update')->name('categorie.update');
+        Route::get('/{id}/show', 'CategorieController@show')->name('categorie.show');
+        Route::delete('/{id}/delete', 'CategorieController@destroy')->name('categorie.destroy');
+        Route::get('/', 'CategorieController@index')->name('categorie');
+    });
 
     Route::get('/', 'PainelController@index')->name('painel');
 });

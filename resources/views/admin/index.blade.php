@@ -15,13 +15,13 @@
                     <p>{{session()->get('notification')}}</p>
                 </div>
             @endif
+            <a href="{{route('admin.create')}}" style="margin-bottom: 10px" type="button" class="btn btn-info btn-flat">
+                            <i class="fa fa-user-plus" aria-hidden="true"></i>&nbsp; Novo Usuário
+            </a>
             @if(isset($admins) && count($admins) > 0)
                 <div class="panel panel-default">
                     <!-- Default panel contents -->
                     <div class="panel-heading">
-                        <a href="{{route('admin.create')}}" type="button" class="btn btn-info btn-flat">
-                            <i class="fa fa-user-plus" aria-hidden="true"></i>&nbsp; Novo Usuário
-                        </a>
                     </div>
                     <div class="panel-body" style="padding: 15px 15px 0px 15px !important;">
                         <table class="table table-bordered">
