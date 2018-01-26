@@ -32,7 +32,7 @@ class RolesTableSeeder extends Seeder
         */
 
         Role::create([
-                'name'    => 'Visitor',
+                'name'    => 'Visitante',
                 'visitor' => true
             ]);
     }

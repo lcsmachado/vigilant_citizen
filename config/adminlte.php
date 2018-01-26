@@ -13,9 +13,9 @@ return [
     |
     */
 
-    'title' => 'CitiZen',
+    'title' => 'citizen',
 
-    'title_prefix' => 'CitiZen - ',
+    'title_prefix' => 'citizen - ',
 
     'title_postfix' => '',
 
@@ -87,7 +87,7 @@ return [
 
     'dashboard_url' => '/painel',
 
-    'logout_url' => 'logout',
+    'logout_url' => '/logout',
 
     'logout_method' => null,
 

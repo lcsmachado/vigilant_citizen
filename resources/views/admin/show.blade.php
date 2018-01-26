@@ -2,11 +2,10 @@
 @section('title','Detalhes')
 
 @section('content_header')
-    <h1>Admin</h1>
     <ol class="breadcrumb">
         <li><a  href="{{route('painel')}}">Home</a></li>
         <li><a  href="{{route('admin')}}">Admin</a></li>
-        <li><a>Show</a></li>
+        <li><a>Usuários</a></li>
     </ol>
 @stop
 
@@ -26,7 +25,7 @@
                     <i class="fa fa-user"></i>
                 </div>
 
-                <form  method="POST" action="{{route('admin.destroy',$admin->email)}}">
+                <form  method="POST" action="{{route('admin.destroy',$admin->id)}}">
                     {!! method_field('DELETE') !!}
                     {!! csrf_field() !!}
                     <button style="border: none;padding: 5px;" type="submit" class="small-box-footer bg-red btn-block"><i class="fa fa-user-times fa-2x" aria-hidden="true"></i>

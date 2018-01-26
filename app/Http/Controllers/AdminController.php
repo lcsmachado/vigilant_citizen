@@ -6,8 +6,16 @@ use App\Models\Admin;
 use App\Models\Role;
 use Illuminate\Http\Request;
 
+/**
+ * Class AdminController
+ * @package App\Http\Controllers
+ */
 class AdminController extends Controller
 {
+    /**
+     * Total items displayed per page
+     * @var int
+     */
     private $totalPage = 5;
 
     /**
@@ -68,10 +76,14 @@ class AdminController extends Controller
      * @param  \App\Models\Admin $admin
      * @return \Illuminate\Http\Response
      */
-    public function show($email)
+    public function show($id)
     {
-        $admin = Admin::where('email', $email)->first();
-        return view('admin.show', compact('admin'));
+        $admin = Admin::where('id', $id)->first();
+        if($admin->deleted == 0)
+        {
+            return view('admin.show', compact('admin'));
+        }
+        return redirect()->route('admin');
     }
 
     /**
@@ -80,12 +92,15 @@ class AdminController extends Controller
      * @param  \App\Models\Admin $admin
      * @return \Illuminate\Http\Response
      */
-    public function edit($email)
+    public function edit($id)
     {
-        $admin = Admin::where('email', $email)->first();
-        $title = 'Editar Usuário: ' . $admin->name;
-        return view('admin.create-edit', compact('admin', 'title'));
-
+        $admin = Admin::where('id', $id)->first();
+        if($admin->deleted == 0)
+        {
+            $title = 'Editar Usuário: ' . $admin->name;
+            return view('admin.create-edit', compact('admin', 'title'));
+        }
+        return redirect()->route('admin');
     }
 
     /**
@@ -95,12 +110,12 @@ class AdminController extends Controller
      * @param  \App\Models\Admin $admin
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $email)
+    public function update(Request $request, $id)
     {
         //
-        $admin = Admin::where('email', $email)->first();
+        $admin = Admin::where('id', $id)->first();
         $admin->name = $request['name'];
-        $admin->password = $request['password'] ? $request['password'] : $admin->password;
+        $admin->password = $request['password'] ? bcrypt($request['password']) : $admin->password;
         $admin->status = $request['status'];
         $admin->role_id = $request['role_id'];
 
@@ -113,7 +128,10 @@ class AdminController extends Controller
             $admin->email = $request['email'];
         }
 
-        $request['password'] = $request['password'] ? $request['password'] : $admin->password;
+        if($request['password'] == null){
+            $request['password'] = $admin->password;
+            $request['password_confirmation'] =  $admin->password;
+        }
 
         $this->validate($request, $rules, $this->messages());
 
@@ -132,31 +150,69 @@ class AdminController extends Controller
      * @param  \App\Models\Admin $admin
      * @return \Illuminate\Http\Response
      */
-    public function destroy($email)
+    public function destroy($id)
     {
-        $admin = Admin::where('email', $email)->first();
+        $admin = Admin::where('id', $id)->first();
         $admin->deleted = 1;
-        if ($admin->save()) {
+        if ($admin->save())
+        {
             $notification = 'Exclusão realizada com sucesso.';
             return redirect()->route('admin')->with('notification', $notification);
-        } else {
-            $notification = 'Falha ao excluir.';
-            return redirect()->back()->with('notification', $notification);
-        }
+        } else
+            {
+                 $notification = 'Falha ao excluir.';
+                 return redirect()->back()->with('notification', $notification);
+            }
     }
 
+
+    /**
+     * Displays trash with deleted users
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function trash()
+    {
+        $admins =  Admin::where('deleted', 1)->orderBy('name')->paginate($this->totalPage);
+        return view('admin.trash',compact('admins'));
+    }
+
+    /**
+     * Restores a user marked as deleted in the database
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function restore($id)
+    {
+        $user = Admin::where('id',$id)->first();
+        $user->deleted = 0;
+        if($user->save())
+        {
+            $notification = 'Usuário restaurado com sucesso!';
+            return redirect()->route('admin')->with('notification',$notification);
+        }
+        return redirect()->back();
+    }
+
+    /**
+     * Array of messages to validate form data
+     * @return array
+     */
     public function messages()
     {
         return [
             'name.required' => 'O campo nome é obrigatório.',
             'name.min' => 'O nome deve ter no mínimo 3 caracteres.',
+            'name.max' => 'O nome deve ter no máximo 45 caracteres.',
             'email.required' => 'O campo email é obrigatório.',
+            'email.max' => 'O nome deve ter no máximo 145 caracteres.',
+            'email.unique' => 'O e-mail já foi cadastrado. Ou encontra-se na lixeira, para ser restaurado',
+            'email.email' => 'O email deve ser um endereço de email válido.',
             'password.required' => 'O campo senha é obrigatório.',
-            'password.min' => 'A senha deve ter no mínimo 8 caracteres.',
-            'email.email' => 'O e-mail deve ser um endereço de e-mail válido.',
+            'password.min' => 'A senha deve ter no mínimo 6 caracteres.',
+            'password.confirmed' =>'A confirmação da senha não corresponde.',
             'role_id.required' => 'Selecione um perfil',
             'status.required' => 'Selecione um status',
-            'email.unique' => 'O e-mail já foi cadastrado'
+
         ];
 
     }
