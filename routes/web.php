@@ -32,7 +32,9 @@ Route::prefix('painel')->group(function () {
         Route::get('/create', 'CategorieController@create')->name('categorie.create');
         Route::post('/create', 'CategorieController@store')->name('categorie.store');
         Route::get('/{id}/edit', 'CategorieController@edit')->name('categorie.edit');
-        Route::put('{id}/update', 'CategorieController@update')->name('categorie.update');
+        Route::put('/{id}/update', 'CategorieController@update')->name('categorie.update');
+        Route::get('/{id}/restore', 'CategorieController@restore')->name('categorie.restore');
+        Route::get('/restore','CategorieController@showRestore')->name( 'categorie.showRestore');
         Route::get('/{id}/show', 'CategorieController@show')->name('categorie.show');
         Route::delete('/{id}/delete', 'CategorieController@destroy')->name('categorie.destroy');
         Route::get('/', 'CategorieController@index')->name('categorie');
