@@ -114,14 +114,12 @@ return [
             'icon' => 'cogs',
             'url'  => 'painel/admin',
         ],
-<<<<<<< HEAD
-=======
+
         [
             'text' =>'Categorias',
             'icon' =>'file',
             'url'  =>'painel/categorie',
         ],
->>>>>>> 9fe7ea07e6febddd72120e69a9544f7d1f391d04
         /*[
             'text'        => 'Pages',
             'url'         => 'admin/pages',

@@ -18,16 +18,16 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('provider');
-            $table->boolean('status');
-            $table->boolean('deleted');
-            $table->boolean('confirmed');
-            $table->string('confirmation_code')->unique();
-            $table->string('token');
-            $table->text('credentials');
-            $table->integer('admin_id_updated')->unsigned();
+            $table->string('provider')->nullable();
+            $table->boolean('status')->default(1);
+            $table->boolean('deleted')->default(0);
+            $table->boolean('confirmed')->default(0);
+            $table->string('confirmation_code')->unique()->nullable();;
+            $table->string('token')->nullable();;
+            $table->text('credentials')->nullable();;
+            $table->integer('admin_id_updated')->unsigned()->nullable();;
             $table->foreign('admin_id_updated')->references('id')->on('admins');
-            $table->rememberToken();
+            $table->rememberToken()->nullable();;
             $table->timestamps();
         });
     }

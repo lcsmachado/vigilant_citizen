@@ -30,10 +30,10 @@ class CategorieController extends Controller
         $title = 'Nova Categoria';
         return view('categorie.create-edit', compact('title'));
     }
-    public function showRestore()
+    public function trash()
     {
       $categories = Categorie::where('deleted', 1)->orderBy('name')->paginate($this->totalPage);
-      return view('categorie.restore')->with('categories', $categories);
+      return view('categorie.trash')->with('categories', $categories);
     }
     /**
      * Store a newly created resource in storage.

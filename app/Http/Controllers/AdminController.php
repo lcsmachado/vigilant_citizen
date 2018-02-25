@@ -12,7 +12,6 @@ use Illuminate\Http\Request;
  */
 class AdminController extends Controller
 {
-    private $totalPage = 5;
 
     /**
      * Total items displayed per page
@@ -78,22 +77,15 @@ class AdminController extends Controller
      * @param  \App\Models\Admin $admin
      * @return \Illuminate\Http\Response
      */
-<<<<<<< HEAD
     public function show($id)
     {
         $admin = Admin::where('id', $id)->first();
-        if($admin->deleted == 0)
-        {
+        if ($admin->deleted == 0) {
             return view('admin.show', compact('admin'));
         }
         return redirect()->route('admin');
-=======
-    public function show($email)
-    {
-        $admin = Admin::where('email', $email)->first();
-        return view('admin.show', compact('admin'));
->>>>>>> 9fe7ea07e6febddd72120e69a9544f7d1f391d04
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -101,24 +93,14 @@ class AdminController extends Controller
      * @param  \App\Models\Admin $admin
      * @return \Illuminate\Http\Response
      */
-<<<<<<< HEAD
     public function edit($id)
     {
         $admin = Admin::where('id', $id)->first();
-        if($admin->deleted == 0)
-        {
+        if ($admin->deleted == 0) {
             $title = 'Editar Usuário: ' . $admin->name;
             return view('admin.create-edit', compact('admin', 'title'));
         }
         return redirect()->route('admin');
-=======
-    public function edit($email)
-    {
-        $admin = Admin::where('email', $email)->first();
-        $title = 'Editar Usuário: ' . $admin->name;
-        return view('admin.create-edit', compact('admin', 'title'));
-
->>>>>>> 9fe7ea07e6febddd72120e69a9544f7d1f391d04
     }
 
     /**
@@ -128,45 +110,37 @@ class AdminController extends Controller
      * @param  \App\Models\Admin $admin
      * @return \Illuminate\Http\Response
      */
-<<<<<<< HEAD
+
     public function update(Request $request, $id)
     {
         //
         $admin = Admin::where('id', $id)->first();
         $admin->name = $request['name'];
         $admin->password = $request['password'] ? bcrypt($request['password']) : $admin->password;
-=======
-    public function update(Request $request, $email)
-    {
-        //
-        $admin = Admin::where('email', $email)->first();
-        $admin->name = $request['name'];
-        $admin->password = $request['password'] ? $request['password'] : $admin->password;
->>>>>>> 9fe7ea07e6febddd72120e69a9544f7d1f391d04
         $admin->status = $request['status'];
         $admin->role_id = $request['role_id'];
 
         $rules = $admin->rules;
 
-        if (!strcmp($admin->email, $request['email'])) {
+        if (!strcmp($admin->email, $request['email']))
+        {
             $rules['email'] = $rules['email'] . ',id,' . $admin->id;
             $admin->email = $request['email'];
         } else {
             $admin->email = $request['email'];
         }
 
-<<<<<<< HEAD
-        if($request['password'] == null){
+        if($request['password'] == null)
+        {
             $request['password'] = $admin->password;
             $request['password_confirmation'] =  $admin->password;
         }
-=======
-        $request['password'] = $request['password'] ? $request['password'] : $admin->password;
->>>>>>> 9fe7ea07e6febddd72120e69a9544f7d1f391d04
+
 
         $this->validate($request, $rules, $this->messages());
 
-        if ($admin->save()) {
+        if ($admin->save())
+        {
             $notification = 'Alteração realizada com sucesso.';
             return redirect()->route('admin')->with('notification', $notification);
         } else {
@@ -181,7 +155,7 @@ class AdminController extends Controller
      * @param  \App\Models\Admin $admin
      * @return \Illuminate\Http\Response
      */
-<<<<<<< HEAD
+
     public function destroy($id)
     {
         $admin = Admin::where('id', $id)->first();
@@ -229,30 +203,15 @@ class AdminController extends Controller
      * Array of messages to validate form data
      * @return array
      */
-=======
-    public function destroy($email)
-    {
-        $admin = Admin::where('email', $email)->first();
-        $admin->deleted = 1;
-        if ($admin->save()) {
-            $notification = 'Exclusão realizada com sucesso.';
-            return redirect()->route('admin')->with('notification', $notification);
-        } else {
-            $notification = 'Falha ao excluir.';
-            return redirect()->back()->with('notification', $notification);
-        }
-    }
 
->>>>>>> 9fe7ea07e6febddd72120e69a9544f7d1f391d04
     public function messages()
     {
         return [
             'name.required' => 'O campo nome é obrigatório.',
             'name.min' => 'O nome deve ter no mínimo 3 caracteres.',
-<<<<<<< HEAD
             'name.max' => 'O nome deve ter no máximo 45 caracteres.',
             'email.required' => 'O campo email é obrigatório.',
-            'email.max' => 'O nome deve ter no máximo 145 caracteres.',
+            'email.max' => 'O email deve ter no máximo 145 caracteres.',
             'email.unique' => 'O e-mail já foi cadastrado. Ou encontra-se na lixeira, para ser restaurado',
             'email.email' => 'O email deve ser um endereço de email válido.',
             'password.required' => 'O campo senha é obrigatório.',
@@ -260,16 +219,6 @@ class AdminController extends Controller
             'password.confirmed' =>'A confirmação da senha não corresponde.',
             'role_id.required' => 'Selecione um perfil',
             'status.required' => 'Selecione um status',
-
-=======
-            'email.required' => 'O campo email é obrigatório.',
-            'password.required' => 'O campo senha é obrigatório.',
-            'password.min' => 'A senha deve ter no mínimo 8 caracteres.',
-            'email.email' => 'O e-mail deve ser um endereço de e-mail válido.',
-            'role_id.required' => 'Selecione um perfil',
-            'status.required' => 'Selecione um status',
-            'email.unique' => 'O e-mail já foi cadastrado'
->>>>>>> 9fe7ea07e6febddd72120e69a9544f7d1f391d04
         ];
 
     }

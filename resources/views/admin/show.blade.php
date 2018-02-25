@@ -2,18 +2,10 @@
 @section('title','Detalhes')
 
 @section('content_header')
-<<<<<<< HEAD
     <ol class="breadcrumb">
         <li><a  href="{{route('painel')}}">Home</a></li>
         <li><a  href="{{route('admin')}}">Admin</a></li>
-        <li><a>Usuários</a></li>
-=======
-    <h1>Admin</h1>
-    <ol class="breadcrumb">
-        <li><a  href="{{route('painel')}}">Home</a></li>
-        <li><a  href="{{route('admin')}}">Admin</a></li>
-        <li><a>Show</a></li>
->>>>>>> 9fe7ea07e6febddd72120e69a9544f7d1f391d04
+        <li><a>Usuário</a></li>
     </ol>
 @stop
 
@@ -33,11 +25,7 @@
                     <i class="fa fa-user"></i>
                 </div>
 
-<<<<<<< HEAD
                 <form  method="POST" action="{{route('admin.destroy',$admin->id)}}">
-=======
-                <form  method="POST" action="{{route('admin.destroy',$admin->email)}}">
->>>>>>> 9fe7ea07e6febddd72120e69a9544f7d1f391d04
                     {!! method_field('DELETE') !!}
                     {!! csrf_field() !!}
                     <button style="border: none;padding: 5px;" type="submit" class="small-box-footer bg-red btn-block"><i class="fa fa-user-times fa-2x" aria-hidden="true"></i>

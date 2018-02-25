@@ -16,9 +16,12 @@
                 </div>
             @endif
             <a href="{{route('categorie.create')}}" type="button" style="margin-bottom:10px" class="btn btn-info btn-flat">
-                            <i class="fa fa-user-plus" aria-hidden="true"></i>&nbsp; Novo Usuário
+                            <i class="fa fa-user-plus" aria-hidden="true"></i>&nbsp; Nova Categoria
             </a>
-            <a href="{{route('categorie.showRestore')}}" type="button" style="margin-bottom:10px; margin-left: 60%" class="fa fa-trash"></a>
+            <a href="{{route('categorie.trash')}}" type="button" class="btn btn-danger btn-flat pull-right" style="margin-bottom: 10px;">
+                <i class="fa fa-trash" aria-hidden="true"></i>&nbsp; Lixeira
+            </a>
+
             @if(isset($categories) && count($categories) > 0)
                 <div class="panel panel-default">
                     <!-- Default panel contents -->

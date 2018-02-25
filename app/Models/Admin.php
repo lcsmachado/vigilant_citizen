@@ -15,39 +15,31 @@ class Admin extends Authenticatable
 
     public $timestamps = false;
 
-<<<<<<< HEAD
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
 
-=======
->>>>>>> 9fe7ea07e6febddd72120e69a9544f7d1f391d04
+
+
     protected $fillable = [
         'name', 'email', 'password','status','role_id'
     ];
-
-<<<<<<< HEAD
-
     /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
      */
-=======
+
     public  $rules =  [
                 'name'     => 'required|min:3|max:100',
                 'email'    => 'required|email|unique:admins',
-                'password' => 'required|min:8',
+                'password' => 'confirmed|required|min:6',
                 'role_id'     => 'required',
                 'status'     => 'required'
             ];
 
-
-
-
->>>>>>> 9fe7ea07e6febddd72120e69a9544f7d1f391d04
     protected $hidden = [
         'password', 'remember_token',
     ];
@@ -59,14 +51,6 @@ class Admin extends Authenticatable
         return $this->hasOne(Role::class,'id','role_id')->first();
     }
 
-<<<<<<< HEAD
-    public  $rules =  [
-        'name'     => 'required|min:3|max:45',
-        'email'    => 'required|max:145|email|unique:admins',
-        'password' => 'confirmed|required|min:6',
-        'role_id'     => 'required',
-        'status'     => 'required'
-    ];
 
     public function hasAnyRole($roles){
         if(is_array($roles)){
@@ -102,7 +86,6 @@ class Admin extends Authenticatable
     {
         $this->notify(new AdminResetPasswordNotification($token));
     }
-=======
->>>>>>> 9fe7ea07e6febddd72120e69a9544f7d1f391d04
+
 
 }

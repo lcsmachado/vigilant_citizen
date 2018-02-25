@@ -16,7 +16,7 @@ class CheckRole
     public function handle($request, Closure $next)
     {
         if($request->user() === null){
-            return redirect()->route('painel.login');//response('Insufficient permissions', 401);
+            return redirect()->route('painel.login')->with('error','');//response('Insufficient permissions', 401);
         }
 
         $actions = $request->route()->getAction();
@@ -28,6 +28,6 @@ class CheckRole
             return $next($request);
         }
 
-        return  redirect()->back();// response('Insufficient permissions', 401);
+        return  redirect()->back()->with('error','Você não tem permissão para acessar está página');// response('Insufficient permissions', 401);
     }
 }

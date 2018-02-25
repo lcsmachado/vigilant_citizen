@@ -28,8 +28,10 @@
                 <form  method="POST" action="{{route('categorie.destroy',$categorie->id)}}">
                     {!! method_field('DELETE') !!}
                     {!! csrf_field() !!}
+                    @if(Route::current()->getName() =='categorie.show')
                     <button style="border: none;padding: 5px;" type="submit" class="small-box-footer bg-red btn-block"><i class="fa fa-user-times fa-2x" aria-hidden="true"></i>
                         &nbsp;Excluir</button>
+                    @endif
                 </form>
 
             </div>
