@@ -44,7 +44,7 @@ class VerifyEmail extends Notification
     {
         return (new MailMessage)
                     ->line('Por favor, verifique seu email para continuar')
-                    ->action('Verificar Conta', route('verify', $this->user->token))
+                    ->action('Verificar Conta', route('verify', $this->user->confirmation_code))
                     ->line('Obrigado, por usar nosso aplicativo!');
     }
 

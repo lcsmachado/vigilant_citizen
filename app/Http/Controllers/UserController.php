@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Validator;
 use App\Http\Requests;
 use Illuminate\Notifications\Notifiable;
 use App\Notifications\forgotPassword;
@@ -41,12 +42,26 @@ class UserController extends Controller
       $user->email = $request->input('email');
       $user->password = bcrypt($request->input('password'));
       $user->confirmation_code = str_random(30);
+    
+      $validator = Validator::make($request->all(), [
+        'name'     => 'required|min:3|max:45',
+        'email'    => 'required|min:3|max:45',
+        'password' => 'required|min:8|max:45',
+      ]);
 
-      $user->sendVerificationCode();
-        
-      if ($user->save()) {
-        return new UserResources($user);
+      if($validator->fails()){
+        return response()->json($validator->messages(), 200);
+      }else{
+          if ($user->save()) {
+          $user->sendVerificationCode();
+          $notification = 'Cadastro realizado com sucesso.';
+          return response()->json($notification);
+        }else{
+          $notification = 'Falha ao cadastrar.';
+          return response()->json($notification);
+        }
       }
+      
     }
 
     /**
@@ -89,8 +104,23 @@ class UserController extends Controller
       $user->email = $request->input('email');
       $user->password = bcrypt($request->input('password'));
 
-      if ($user->save()) {
-        return new UserResources($user);
+      $validator = Validator::make($request->all(), [
+        'name'     => 'required|min:3|max:45',
+        'email'    => 'required|min:3|max:45',
+        'password' => 'required|min:8|max:45',
+      ]);
+
+      if($validator->fails()){
+        return response()->json($validator->messages(), 200);
+      }else{
+          if ($user->save()) {
+          $user->sendVerificationCode();
+          $notification = 'Cadastro realizado com sucesso.';
+          return response()->json($notification);
+        }else{
+          $notification = 'Falha ao cadastrar.';
+          return response()->json($notification);
+        }
       }
     }
 
@@ -133,4 +163,20 @@ class UserController extends Controller
         return new UserResources($user);
       }
     }
+
+    public function messages(){
+        return [
+            'name.required' => 'O campo nome é obrigatório.',
+            'name.min' => 'O nome deve ter no mínimo 3 caracteres.',
+            'name.max' => 'O nome deve ter no máximo 45 caracteres.',
+            'email.required' => 'O campo email é obrigatório.',
+            'email.min' => 'O email deve ter no mínimo 3 caracteres.',
+            'email.max' => 'O email deve ter no máximo 45 caracteres.',
+            'password.required' => 'O campo senha é obrigatório.',
+            'password.min' => 'A senha deve ter no mínimo 3 caracteres.',
+            'password.max' => 'A senha deve ter no máximo 45 caracteres.'
+        ];
+
+    }
+    
 }

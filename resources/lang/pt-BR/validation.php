@@ -100,8 +100,20 @@ return [
     */
 
     'custom'               => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'email' => [
+            'required' => 'O campo e-mail deve ser preenchido',
+            'min'      => 'O campo e-mail deve ter no mínimo 3 caracteres',
+            'max'      => 'O campo e-mail deve ter no máximo 45 caracteres'
+        ],
+        'name' => [
+            'required' => 'O campo nome deve ser preenchido',
+            'min'      => 'O campo nome deve ter no mínimo 3 caracteres',
+            'max'      => 'O campo nome deve ter no máximo 45 caracteres'
+        ],
+        'password' => [
+            'required' => 'O campo senha deve ser preenchido',
+            'min'      => 'O campo senha deve ter no mínimo 8 caracteres',
+            'max'      => 'O campo senha deve ter no máximo 45 caracteres'
         ],
     ],
 

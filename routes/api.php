@@ -19,13 +19,13 @@ Route::middleware(['auth:api', 'cors'])->get('/user', function (Request $request
 });
 
 //Metohd used to show User Profile
-Route::get('user/{id}','UserController@show');
+Route::middleware(['api'])->get('user/{id}','UserController@show');
 
 //Method used to create a new user
 Route::post('user','UserController@store');
 
 //Method used to update User Profile
-Route::put('user/{id}','UserController@update');
+Route::middleware(['api'])->put('user/{id}','UserController@update');
 
 //Method used to verify User Email
 Route::get('/verify/{token}', 'VerifyController@verify')->name('verify');
